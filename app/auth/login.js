@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {BackHandler, Dimensions, AsyncStorage} from 'react-native'
 import { StackNavigator } from 'react-navigation';
-import { Text, Content, Header, Container, View, Thumbnail, Item, Input, Form, Button, Grid, Col } from 'native-base';
+import { Text, Content, Header, Container, View, Thumbnail, Item, Input, Form, Button, Grid, Col, Spinner } from 'native-base';
 var {height, width} = Dimensions.get('window');
 
 import { api } from '../service/service'
@@ -18,10 +18,15 @@ export default class Login extends Component {
 
     this.state = {
       username : 'administrator',
-      password : 'secret'
+      password : 'secret',
+      isLoading : false,
+      loginstatus : ''
     }
   }
   onButtonSubmit(){
+    this.setState({
+      isLoading :true
+    })
     fetch(api + 'auth/login', {
       method: 'POST',
       headers: {
@@ -37,11 +42,37 @@ export default class Login extends Component {
       console.log('response', response);
       if (response.id) {
         AsyncStorage.setItem('loginkey', JSON.stringify(response));
+        this.setState({
+          isLoading :false
+        })
         this.props.navigation.navigate('Dashboard')
+      }else {
+        this.setState({
+          isLoading :false,
+          loginstatus : 'Login Gagal !'
+        })
       }
+    }).catch((error)=>{
+      this.setState({
+        isLoading :false,
+        loginstatus : 'Login Gagal !'
+      })
     })
   }
   render() {
+    if (this.state.isLoading) {
+      return (
+        <View style={{
+           flex: 1,
+           flexDirection: 'column',
+           justifyContent: 'center',
+           alignItems: 'center',
+          }}>
+          <Spinner color="green" />
+        </View>
+      )
+    }
+
     return (
       <Container>
           <Header androidStatusBarColor="#258452" style={{display:'none'}}/>
@@ -57,6 +88,7 @@ export default class Login extends Component {
                 }}>
                 <Thumbnail style={{marginBottom : 10}} large source={require('../../resource/logo.png')} />
                 <Text style={{color :'#fff'}}>SIGN IN</Text>
+                <Text style={{color:'red'}}>{this.state.loginstatus}</Text>
                  <Form style={{marginTop:10, width : width / 1.2}}>
                    <Item regular style={{backgroundColor:'#fff'}}>
                      <Input value={this.state.username} onChangeText={(text)=>this.setState({

@@ -20,6 +20,7 @@ class Splashscreen extends Component {
     super(props)
   }
   componentWillMount(){
+    // AsyncStorage.clear()
      fetch(url , {
         method: 'GET'
      }).then((response)=>{
@@ -32,7 +33,6 @@ class Splashscreen extends Component {
               this.props.navigation.navigate('Login')
             }
           });
-          this.props.navigation.navigate('Login')
         }else {
           Alert.alert(
             'Gagal Menyambungkan Jaringan!',
