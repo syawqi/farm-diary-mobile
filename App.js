@@ -4,54 +4,76 @@
  * @flow
  */
 
-import React, { Component } from 'react';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
-
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
-
-export default class App extends Component<{}> {
+import React, { Component,Dimensions } from 'react';
+import { BackHandler, Alert } from 'react-native'
+import { StackNavigator } from 'react-navigation';
+import { Content, Header, Container, View, Thumbnail,Spinner } from 'native-base';
+import { url } from './app/service/service'
+import LoginScreen from './app/auth/login'
+import RegisterScreen from './app/auth/register'
+class Splashscreen extends Component {
+  static navigationOptions = ({ navigation }) => ({
+   header : null
+  });
+  constructor(props){
+    super(props)
+  }
+  componentWillMount(){
+     fetch(url , {
+        method: 'GET'
+     }).then((response)=>{
+      console.log(response.status);
+        if (response.status == 200) {
+          this.props.navigation.navigate('Login')
+        }else {
+          Alert.alert(
+            'Gagal Menyambungkan Jaringan!',
+            'Aplikasi sedang mengalami gangguan!',
+            [
+              {text: 'OK', onPress: () => {
+                  BackHandler.exitApp()
+              }},
+            ],
+            { cancelable: false }
+          )
+        }
+     });
+  }
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit App.js
-        </Text>
-        <Text style={styles.instructions}>
-          {instructions}
-        </Text>
-      </View>
+      <Container>
+          <Header androidStatusBarColor="#258452" style={{display:'none'}}/>
+          <View style={{backgroundColor : '#32a96f',    flex: 1,
+             flexDirection: 'column',
+             justifyContent: 'center',
+             alignItems: 'center',}}>
+              <View style={{
+                 flex: 1,
+                 flexDirection: 'column',
+                 justifyContent: 'center',
+                 alignItems: 'center',
+                }}>
+                <Thumbnail style={{marginBottom : 10}} large source={require('./resource/logo.png')} />
+                <Spinner color='white' />
+              </View>
+          </View>
+      </Container>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+const App = StackNavigator({
+  Splash: {
+    screen: Splashscreen,
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+  Login : {
+    screen : LoginScreen,
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+  Register : {
+    screen : RegisterScreen,
+  }
+},{
+  mode : 'card'
 });
+
+export default App;
