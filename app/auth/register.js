@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {BackHandler, Dimensions} from 'react-native'
-import { StackNavigator } from 'react-navigation';
+import { StackNavigator, NavigationActions } from 'react-navigation';
 import { Text, Content, Header, Container, View, Thumbnail, Item, Input, Form, Button, Grid, Col, Left, Body, Title, Icon, Right } from 'native-base';
 var {height, width} = Dimensions.get('window');
 export default class Register extends Component {
@@ -13,21 +13,20 @@ export default class Register extends Component {
   render() {
     return (
       <Container>
-          <Header androidStatusBarColor="#258452" style={{backgroundColor:'#32a96f'}}>
-              <Left>
-              <Button transparent>
+          <Header androidStatusBarColor="#258452" style={{backgroundColor:'#32a96f', shadowOffset: {height: 0, width: 0},
+    shadowOpacity: 0,elevation: 0}}>
+            <Left style={{flex: 1}}>
+              <Button onPress={()=> this.props.navigation.goBack() } transparent>
                 <Icon name='arrow-back' />
               </Button>
             </Left>
-            <Body>
-              <Title style={{textAlign:'center'}}>Header</Title>
-            </Body>
-            <Right />
           </Header>
           <View style={{backgroundColor : '#32a96f',    flex: 1,
              flexDirection: 'column',
              justifyContent: 'center',
              alignItems: 'center',}}>
+
+              <Text style={{color:'#fff', fontWeight:'bold', fontSize:20}}>SIGN UP</Text>
               <View style={{
                  flex: 1,
                  flexDirection: 'column',

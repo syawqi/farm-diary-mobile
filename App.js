@@ -5,12 +5,13 @@
  */
 
 import React, { Component,Dimensions } from 'react';
-import { BackHandler, Alert } from 'react-native'
+import { BackHandler, Alert,AsyncStorage } from 'react-native'
 import { StackNavigator } from 'react-navigation';
 import { Content, Header, Container, View, Thumbnail,Spinner } from 'native-base';
 import { url } from './app/service/service'
 import LoginScreen from './app/auth/login'
 import RegisterScreen from './app/auth/register'
+import DashboardScreen from './app/dashboard/dashboard'
 class Splashscreen extends Component {
   static navigationOptions = ({ navigation }) => ({
    header : null
@@ -24,6 +25,13 @@ class Splashscreen extends Component {
      }).then((response)=>{
       console.log(response.status);
         if (response.status == 200) {
+          AsyncStorage.getItem('loginkey', (err, result) => {
+            if (result) {
+              this.props.navigation.navigate('Dashboard')
+            }else {
+              this.props.navigation.navigate('Login')
+            }
+          });
           this.props.navigation.navigate('Login')
         }else {
           Alert.alert(
@@ -71,6 +79,9 @@ const App = StackNavigator({
   },
   Register : {
     screen : RegisterScreen,
+  },
+  Dashboard : {
+    screen : DashboardScreen,
   }
 },{
   mode : 'card'
