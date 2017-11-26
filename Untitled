@@ -1,0 +1,23 @@
+
+    cod: "200",
+    message: 0.0075,
+    cnt: 10,
+    list: [
+        {
+            main: {
+                temp: 14.53,
+            },
+            weather: [
+                {
+                    id: 802,
+                    main: "",
+                    description: "",
+                    icon: ""
+                }
+            ]
+        }
+    ],
+    city: {
+        name: "Shuzenji"
+    }
+}

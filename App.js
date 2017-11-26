@@ -12,6 +12,16 @@ import { url } from './app/service/service'
 import LoginScreen from './app/auth/login'
 import RegisterScreen from './app/auth/register'
 import DashboardScreen from './app/dashboard/dashboard'
+import PemasukanScreen from './app/pemasukan/'
+import PemasukanformScreen from './app/pemasukan/form'
+import PengeluaranScreen from './app/pengeluaran/'
+import PengeluaranformScreen from './app/pengeluaran/form'
+import RencanaScreen from './app/rencana-penanaman/'
+import RencanaformScreen from './app/rencana-penanaman/form'
+import RealisasiScreen from './app/realisasi-penanaman/'
+import RealisasidetailScreen from './app/realisasi-penanaman/detail'
+import ProfileScreen from './app/profile/'
+
 class Splashscreen extends Component {
   static navigationOptions = ({ navigation }) => ({
    header : null
@@ -82,6 +92,28 @@ const App = StackNavigator({
   },
   Dashboard : {
     screen : DashboardScreen,
+  },
+  Pemasukan : {
+    screen : PemasukanScreen,
+  },Pemasukanform : {
+    screen : PemasukanformScreen,
+  },Pengeluaran : {
+    screen : PengeluaranScreen,
+  },Pengeluaranform : {
+    screen : PengeluaranformScreen,
+  },Realisasi : {
+    screen : RealisasiScreen,
+  },Rencana : {
+    screen : RencanaScreen,
+  },
+  Profile : {
+    screen : ProfileScreen,
+  },
+  Realisasidetail : {
+    screen : RealisasidetailScreen,
+  },
+  Rencanaform: {
+    screen : RencanaformScreen
   }
 },{
   mode : 'card'

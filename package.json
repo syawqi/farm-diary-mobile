@@ -10,8 +10,10 @@
 		"native-base": "^2.3.3",
 		"react": "16.0.0",
 		"react-native": "0.50.4",
+		"react-native-svg": "5.5.1",
 		"react-native-vector-icons": "^4.4.2",
-		"react-navigation": "^1.0.0-beta.21"
+		"react-navigation": "^1.0.0-beta.21",
+		"victory-native": "^0.16.1"
 	},
 	"devDependencies": {
 		"babel-jest": "21.2.0",
